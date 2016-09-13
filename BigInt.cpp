@@ -25,27 +25,27 @@ public:
 	}
 	
 	BigInt(int a)
-    {
+  {
         int count = 0;
         
         if(a == 0)
             BigInt();
         else
         {
-			//initializing all elements to 0 first        
-			for(int i = 0 ; i < MAX; i++)
-				numbers[i] = 0;
+					//initializing all elements to 0 first        
+					for(int i = 0 ; i < MAX; i++)
+						numbers[i] = 0;
 			
-            while(a != 0)
-            {
+          while(a != 0)
+          {
                 this->numbers[count] = a%10;
                 a = a/10;
                 count++;            
-            }
-            this->IntCount = count;
-        }       
+          }
+          this->IntCount = count;
+        }      
         
-    }
+  }
 	
 	BigInt(const BigInt& a)
 	{
@@ -92,24 +92,26 @@ public:
 		return ret;
 	}
 	
-	//I should try overloading the cout operator here instead of creating print method
-    void print()
+	
+	friend ostream& operator<<(ostream& os, const BigInt& bi)
+	{
+		if(bi.IntCount == 0)
+            os<<0;
+            
+    else
     {
-        if(IntCount == 0)
-            cout<<0;
+      int count = bi.IntCount - 1;
+      while(count >= 0)
+      {
+        os<<bi.numbers[count--];                
+      }
             
-        else
-        {
-            int count = IntCount - 1;
-            while(count >= 0)
-            {
-                cout<<numbers[count--];                
-            }
-            
-        }
-        
-        
-    }
+   }
+		
+		return os;
+		
+	}
+	
 };
 
 
@@ -117,16 +119,13 @@ public:
 int main(int argc, char **argv)
 {
 	BigInt* a = new BigInt(7778);
-	a->print();
-	cout<<endl;
+	cout<<*a<<endl;
 	BigInt* b = new BigInt(9888);
-	b->print();
-	cout<<endl;
+	cout<<*b<<endl;
 	BigInt* c = *a + *b;
-	c->print();
-	cout<<endl;
+	cout<<*c<<endl;
 	BigInt* d = new BigInt(*a);
-	d->print();
+	cout<<*d<<endl;
 	
 	delete a;
 	delete b;
